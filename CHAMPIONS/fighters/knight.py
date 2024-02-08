@@ -8,7 +8,7 @@ class Knight:
         self.max_hp = max_hp
         self.hp = max_hp
         self.strength = strength
-        self.start_potions = potions
+        self.potions = potions
         self.alive = True
         self.animation_list = []
         self.frame_index = 0

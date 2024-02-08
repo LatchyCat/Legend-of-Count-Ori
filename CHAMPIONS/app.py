@@ -3,6 +3,7 @@
 from fighters.knight import Knight
 from fighters.bandit import Bandit
 from fighters.healthbar import HealthBar
+from buttons.button import Button
 
 
 #! Future Imports Fighter Classes
@@ -35,13 +36,14 @@ screen_height = 400 + bottom_panel
 screen = pygame.display.set_mode((screen_width, screen_height))
 pygame.display.set_caption("Legend of Count Ori")
 
-#Difine game variables
+#! Difine game variables
 current_fighter = 1
 total_fighters = 3
 action_cooldown = 0
 action_wait_time = 90
 attack = False
 potion = False
+potion_effect = 15
 clicked = False
 
 
@@ -63,6 +65,9 @@ back_ground_img = pygame.image.load('CHAMPIONS/images/background/background.png'
 
 #! Panel Image
 panel_img = pygame.image.load('CHAMPIONS/images/icons/panel.png').convert_alpha()
+
+#! Button Images
+potion_img = pygame.image.load('CHAMPIONS/images/icons/potion.png').convert_alpha()
 
 #! Sword Image
 sword_img = pygame.image.load('CHAMPIONS/images/icons/sword.png').convert_alpha()
@@ -116,6 +121,8 @@ bandit2_health_bar = HealthBar(550, screen_height - bottom_panel + 100, bandit2.
 # monk =   Monk(200, 260, 'Monk', 100, 12, 10)
 
 
+#! Create Buttons
+potion_button = Button(screen, 100, screen_height - bottom_panel + 70, potion_img, 64, 64)
 
 
 #! WARNING
@@ -168,6 +175,9 @@ while run:
                 attack = True
                 target = bandit_list[count]
 
+    if potion_button.draw():
+        potion = True
+
     #* Player Action
     if knight.alive == True:
         if current_fighter == 1:
@@ -179,6 +189,18 @@ while run:
                     knight.attack(target)
                     current_fighter += 1
                     action_cooldown = 0
+                #* Potion
+                if potion == True:
+                    if knight.potions > 0:
+                        #? Check if the potion will heal over max Health
+                        if knight.max_hp - knight.hp > potion_effect:
+                            heal_amount = potion_effect
+                        else:
+                            heal_amount = knight.max_hp - knight.hp
+                        knight.hp += heal_amount
+                        knight.potions -= 1
+                        current_fighter += 1
+                        action_cooldown = 0
 
 
     #* Enemy Action
