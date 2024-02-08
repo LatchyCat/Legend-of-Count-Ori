@@ -11,7 +11,7 @@ class Knight:
         self.alive = True
         self.animation_list = []
         self.frame_index = 0
-        self.action = 1 #? 0:idle, 1:attack, 2:hurt, 3:dead
+        self.action = 0 #? 0:idle, 1:attack, 2:hurt, 3:dead
         self.update_time = pygame.time.get_ticks()
         #Load Idle Images
         temp_list = []
