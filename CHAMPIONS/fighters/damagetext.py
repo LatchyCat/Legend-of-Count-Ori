@@ -1,0 +1,26 @@
+import pygame
+
+
+#? Define Colours
+red = (255, 0, 0)
+green = (0, 255, 0)
+
+
+
+class DamageText(pygame.sprite.Sprite):
+    def __init__(self, x, y, damage, colour, font):
+        pygame.sprite.Sprite.__init__(self)
+        self.image = font.render(damage, True, colour)
+        self.rect = self.image.get_rect()
+        self.rect.center = (x, y)
+        self.counter = 0
+
+
+
+    def update(self):
+        #Move dmg text up
+        self.rect.y -= 1
+        #Delete text after few seconds
+        self.counter += 1
+        if self.counter > 30:
+            self.kill()

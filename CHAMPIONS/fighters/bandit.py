@@ -1,15 +1,23 @@
 import pygame
 import random
+from fighters.damagetext import DamageText
+
+#? Define Colours
+red = (255, 0, 0)
+green = (0, 255, 0)
+
+
 clock = pygame.time.Clock()
 
 class Bandit:
-    def __init__(self, x, y, name, max_hp, strength, potions):
+    def __init__(self, x, y, name, max_hp, strength, potions, damage_text_group):
         self.name = name
         self.max_hp = max_hp
         self.hp = max_hp
         self.strength = strength
-        self.start_potions = potions
+        self.potions = potions
         self.alive = True
+        self.damage_text_group = damage_text_group
         self.animation_list = []
         self.frame_index = 0
         self.action = 0 #? 0:idle, 1:attack, 2:hurt, 3:dead
@@ -33,7 +41,6 @@ class Bandit:
         self.rect.center = (x, y)
 
 
-
     def update(self):
         animation_cooldown = 100
         #Handle Animation
@@ -54,7 +61,9 @@ class Bandit:
         self.frame_index = 0
         self.update_time = pygame.time.get_ticks()
 
-    def attack(self, target):
+
+
+    def attack(self, target, font):
         # Attack enemy
         rand = random.randint(-5, 5)
         damage = self.strength + rand
@@ -63,6 +72,10 @@ class Bandit:
         if target.hp < 1:
             target.hp = 0
             target.alive = False
+        #Damage Text
+        damage_text = DamageText(target.rect.centerx, target.rect.y, str(damage), red, font)
+        self.damage_text_group.add(damage_text)
+
         # Set variable to attack animation
         self.action = 1
         self.frame_index = 0
