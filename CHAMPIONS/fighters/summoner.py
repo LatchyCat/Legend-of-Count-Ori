@@ -9,7 +9,7 @@ green = (0, 255, 0)
 
 clock = pygame.time.Clock()
 
-class Knight:
+class Summoner:
     def __init__(self, x, y, name, max_hp, strength, potions, damage_text_group):
         self.name = name
         self.max_hp = max_hp

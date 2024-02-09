@@ -9,7 +9,7 @@ green = (0, 255, 0)
 
 clock = pygame.time.Clock()
 
-class Knight:
+class Blob:
     def __init__(self, x, y, name, max_hp, strength, potions, damage_text_group):
         self.name = name
         self.max_hp = max_hp
@@ -23,6 +23,7 @@ class Knight:
         self.frame_index = 0
         self.action = 0 #? 0:idle, 1:attack, 2:hurt, 3:dead
         self.update_time = pygame.time.get_ticks()
+
         #Load Idle Images
         temp_list = []
         for i in range(8):
@@ -41,7 +42,7 @@ class Knight:
 
         #Load Hurt Images
         temp_list = []
-        for i in range(3):
+        for i in range(1):
             img = pygame.image.load(f'CHAMPIONS/images/{self.name}/Hurt/{i}.png')
             img = pygame.transform.scale(img, (img.get_width() * 3, img.get_height() * 3))
             temp_list.append(img)
